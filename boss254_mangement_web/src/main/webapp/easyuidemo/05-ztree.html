@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+	<link rel="stylesheet" type="text/css" href="../js/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../js/easyui/themes/icon.css">
+	<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/ztree/jquery.ztree.all-3.5.js"></script>
+	<link rel="stylesheet" href="../js/ztree/zTreeStyle.css" type="text/css">
+</head>
+<body>
+
+	<div id="cc" class="easyui-layout" data-options="fit:true"> 
+
+		<div data-options="region:'north',title:'速运快递',split:true" style="height:100px;"></div> 
+	
+		
+		<div data-options="region:'west',title:'菜单导航',split:true" style="width:200px;">
+			<div  class="easyui-accordion" data-options="fit:true" > 
+				<div title="数据一">
+					<ul id="ztree" class="ztree"></ul>
+				<script type="text/javascript">
+					$(function(){
+						//页面加载之后发送一个ajax请求 获得json数据
+						$.post("../data/menu.json",function(data){
+							var setting ={
+									data: {
+										simpleData: {
+										enable: true
+										}
+									},
+									 callback:{ 
+										 //为节点绑定单击事件
+                                         onClick:function(event,treeId, treeNode){
+                                        	// alert(treeNode.name);
+                                        	//动态添加一个选项卡面板
+                                        	if (treeNode.page != undefined) {
+                                        		var title= treeNode.name;
+                                				var url=treeNode.page;
+                                        		var v = $('#tt').tabs('exists',title);
+                                				//alert(v)
+                                				if (v) {
+                                					$('#tt').tabs('select',title);
+                                				} else {
+                                					$('#tt').tabs('add',{ 
+                                						
+                                						title:title, 
+                                						
+                                						content:"<iframe src='../"+url+"' style='height:95%; width:100%;border: 0'></iframe>", 
+                                						
+                                						closable:true, 
+                                						})
+                                					}
+												} 
+                                         	}
+									 	}
+									};
+									$.fn.zTree.init($("#ztree"), setting, data);
+								},'json')
+							});
+					</script>
+				 </div> 
+		 	</div> 			 			
+		</div> 
+	<div data-options="region:'center'" style="padding:5px;background:#eee;">
+		<div  class="easyui-tabs" data-options="fit:true" id="tt" > 
+			<div data-options="title:'数据区域'" ></div> 
+		</div> 
+	</div> 
+	</div> 
+
+</body>
+</html>

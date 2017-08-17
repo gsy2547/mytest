@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+	<link rel="stylesheet" type="text/css" href="../js/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../js/easyui/themes/icon.css">
+	<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+	<style type="text/css">
+		.menuCls{}
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			$(".menuCls").click(function(){
+				var title= this.innerHTML;
+				var url=this.href;
+				//alert(title)
+				//判断tabs是否存在 要是存在就选中  没有就创建
+				var v = $('#tt').tabs('exists',title);
+				//alert(v)
+				if (v) {
+					$('#tt').tabs('select',title);
+				} else {
+					$('#tt').tabs('add',{ 
+						
+						title:title, 
+						
+						content:"<iframe src='"+url+"' style='height:95%; width:100%'></iframe>", 
+						
+						closable:true, 
+					})
+				}
+				return false;
+			})
+			
+		})
+	</script>
+	
+</head>
+<body>
+
+	<div id="cc" class="easyui-layout" data-options="fit:true"> 
+
+		<div data-options="region:'north',title:'速运快递',split:true" style="height:100px;"></div> 
+	
+		
+		<div data-options="region:'west',title:'菜单导航',split:true" style="width:200px;">
+		
+			<div  class="easyui-accordion" data-options="fit:true" > 
+					<div data-options="title:'菜单一'" >
+						<a href="http://www.itcast.cn" class="menuCls">传智</a><br>
+						<a href="http://www.baidu.com" class="menuCls">百度</a><br>
+						<a href="http://www.1688.com" class="menuCls">阿里</a><br>
+					 </div> 
+					
+					<div data-options="title:'菜单二'"> </div> 
+					
+					<div data-options="title:'菜单三'"> </div> 
+					
+			</div> 
+					
+								
+							
+		</div> 
+		
+		<div data-options="region:'center'" style="padding:5px;background:#eee;">
+		
+				<div  class="easyui-tabs" data-options="fit:true" id="tt" > 
+					<div data-options="title:'数据区域'" >
+					 </div> 
+			</div> 
+
+</div> 
+
+				
+		
+		
+		
+		</div> 
+
+
+	</div>
+
+	
+</body>
+</html>
